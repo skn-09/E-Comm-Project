@@ -1,0 +1,13 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <h3>Categories</h3>
+    <ul>
+      <li *ngFor="let cat of categories" (click)="goToCategory(cat.slug)">
+        {{ cat.label }}
+      </li>
+    </ul>
+  </aside>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

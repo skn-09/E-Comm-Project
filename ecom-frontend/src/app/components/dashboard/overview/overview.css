@@ -1,0 +1,37 @@
+.category-section {
+  margin-bottom: 24px;
+}
+
+.category-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.category-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.category-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.category-card p {
+  margin: 0;
+  color: #555;
+  font-size: 13px;
+}
+
+.category-card:hover {
+  background: #f7f7f7;
+}
+
+.products-section h2 {
+  margin: 0 0 12px;
+}

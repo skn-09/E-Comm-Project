@@ -1,0 +1,13 @@
+<section class="category-section">
+  <h2>Browse Categories</h2>
+  <div class="category-grid">
+    <button type="button" class="category-card" *ngFor="let cat of categories" (click)="goToCategory(cat.slug)">
+      <h3>{{ cat.label }}</h3>
+      <p>{{ cat.description }}</p>
+    </button>
+  </div>
+</section>
+<section class="products-section">
+  <h2>All Products</h2>
+  <app-product-list></app-product-list>
+</section>

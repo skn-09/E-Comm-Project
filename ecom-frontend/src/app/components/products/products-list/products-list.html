@@ -1,0 +1,14 @@
+<div *ngIf="loading" class="status">Loading products...</div>
+<div *ngIf="errorMsg" class="status error">{{ errorMsg }}</div>
+<div *ngIf="!loading && products.length" class="product-container">
+  <div *ngFor="let product of products" class="product-card">
+    <img class="product-image" [src]="product.imageUrl" [alt]="product.name" (click)="showDetails(product)" />
+    <h3>{{ product.name }}</h3>
+    <p class="price">₹{{ product.price }}</p>
+    <p *ngIf="product.discount" class="discount">{{ product.discount }}% OFF</p>
+    <p *ngIf="product.quantity > 0" class="stock">In stock: {{ product.quantity }}</p>
+    <p *ngIf="product.quantity === 0" class="sold-out">Sold Out</p>
+    <button type="button" (click)="addToCart(product)" [disabled]="product.quantity === 0">{{ product.quantity === 0 ? 'Sold Out' : 'Add to Cart' }}</button>
+  </div>
+</div>
+<div *ngIf="!loading && !products.length" class="status">No products found.</div>

@@ -1,0 +1,45 @@
+<div class="signup-container">
+    <h2>Signup</h2>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" formControlName="name" placeholder="Enter your name" />
+            <p *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid" class="error">Name is required
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" formControlName="email" placeholder="Enter your email" />
+            <p *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" class="error">
+                Mail must be have lowercase,special character and number
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" formControlName="password" placeholder="Enter your password" />
+            <p *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="error">
+                Password must be at least 8 characters long and include uppercase, lowercase, number, and special
+                character.
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label>Contact</label>
+            <input type="text" formControlName="contact" placeholder="Enter 10-digit number" />
+            <p *ngIf="signupForm.get('contact')?.touched && signupForm.get('contact')?.invalid" class="error">
+                Enter valid 10-digit number
+            </p>
+        </div>
+
+        <button type="submit" [disabled]="signupForm.invalid">Signup</button>
+
+        <p [ngClass]="{ 'error': isError, 'success': !isError }">{{ message }}</p>
+
+        <p class="switch">
+            Already have an account? <a routerLink="/login">Login here</a>
+        </p>
+    </form>
+</div>
