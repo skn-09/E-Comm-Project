@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { User } from "../models/User.js";
+import { User } from "../models/User";
 import {
   validateEmail,
   validatePassword,
   validateContact,
-} from "../utils/validators.js";
+} from "../utils/validators";
 
 export const signup = async (req: Request, res: Response) => {
   try {

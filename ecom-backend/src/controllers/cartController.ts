@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Cart } from "../models/Cart.js";
-import { Product } from "../models/Product.js";
+import { Cart } from "../models/Cart";
+import { Product } from "../models/Product";
 
 interface AuthedRequest extends Request {
   userId?: string;
