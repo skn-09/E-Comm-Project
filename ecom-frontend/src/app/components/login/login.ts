@@ -37,7 +37,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (res: any) => {
         if (res.token && res.user?.id) {
-          this.authService.storeSession(res.token, res.user.id);
+          this.authService.storeSession(res.token, res.user.id, res.refreshToken);
         }
 
         this.message = res.message;

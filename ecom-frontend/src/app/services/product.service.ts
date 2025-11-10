@@ -3,6 +3,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
+const readEnv = (key: string, fallback: string): string => {
+  const raw =
+    (globalThis as any)?.process?.env?.[key] ??
+    (typeof import.meta !== 'undefined' ? import.meta.env?.[key] : undefined);
+  if (!raw) {
+    return fallback;
+  }
+  const trimmed = raw.trim();
+  return trimmed.length > 0 ? trimmed : fallback;
+};
+
+const apiBaseUrl = readEnv('NG_APP_API_BASE_URL', 'http://localhost:3000/api');
+
 export interface Product {
   _id: string;
   name: string;
@@ -18,7 +31,7 @@ export interface Product {
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private baseUrl = 'http://localhost:3000/api/products'; //  backend
+  private baseUrl = readEnv('NG_APP_PRODUCT_BASE_URL', `${apiBaseUrl}/products`);
 
   constructor(private http: HttpClient) {}
 

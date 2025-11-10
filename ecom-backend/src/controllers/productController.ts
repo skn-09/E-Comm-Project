@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { Product } from "../models/Product";
+import {
+  ProductServiceError,
+  createProductRecord,
+  findProductById,
+  listProducts,
+} from "../services/productService";
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const {
@@ -50,22 +55,23 @@ export const createProduct = async (req: Request, res: Response) => {
         .json({ message: "Quantity must be a non-negative number" });
     }
 
-    const prod = new Product({
-      name: name.trim(),
+    const prod = await createProductRecord({
+      name,
       price,
-      rating: rating,
-      discount: discount,
-      imageUrl: imageUrl && imageUrl.trim() ? imageUrl.trim() : undefined,
-      description: description,
-      material: material,
-      moreInfo: moreInfo,
-      category: category.trim().toLowerCase(),
-      quantity: quantity !== undefined ? quantity : 1,
+      rating,
+      discount,
+      imageUrl,
+      description,
+      material,
+      moreInfo,
+      category,
+      quantity,
     });
-
-    await prod.save();
     return res.status(201).json({ message: "Product created", product: prod });
   } catch (err) {
+    if (err instanceof ProductServiceError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
     console.error("createProduct error", err);
     return res.status(500).json({ message: "Server error" });
   }
@@ -75,14 +81,9 @@ export const createProduct = async (req: Request, res: Response) => {
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const { category } = req.query;
-    const filter: any = {};
-
-    if (category) {
-      filter.category = { $regex: new RegExp(`^${category}$`, "i") };
-    }
-
-    const products = await Product.find(filter).sort({ createdAt: -1 });
-
+    const products = await listProducts(
+      typeof category === "string" ? category : undefined
+    );
     return res.status(200).json({ products });
   } catch (err) {
     console.error("getProducts error", err);
@@ -94,10 +95,12 @@ export const getProducts = async (req: Request, res: Response) => {
 export const getProductById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const product = await Product.findById(id);
-    if (!product) return res.status(404).json({ message: "Product not found" });
+    const product = await findProductById(id);
     return res.status(200).json({ product });
   } catch (err) {
+    if (err instanceof ProductServiceError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
     console.error("getProductById error", err);
     return res.status(500).json({ message: "Server error" });
   }

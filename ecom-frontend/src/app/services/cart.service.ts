@@ -3,6 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { Product } from './product.service';
 
+const readEnv = (key: string, fallback: string): string => {
+  const raw =
+    (globalThis as any)?.process?.env?.[key] ??
+    (typeof import.meta !== 'undefined' ? import.meta.env?.[key] : undefined);
+  if (!raw) {
+    return fallback;
+  }
+  const trimmed = raw.trim();
+  return trimmed.length > 0 ? trimmed : fallback;
+};
+
+const apiBaseUrl = readEnv('NG_APP_API_BASE_URL', 'http://localhost:3000/api');
+
 export interface CartItem {
   product: Product;
   quantity: number;
@@ -16,7 +29,7 @@ export interface Cart {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private apiUrl = 'http://localhost:3000/api/cart';
+  private apiUrl = readEnv('NG_APP_CART_BASE_URL', `${apiBaseUrl}/cart`);
   private cartSubject = new BehaviorSubject<Cart | null>(null);
 
   constructor(private http: HttpClient) {}
