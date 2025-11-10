@@ -7,6 +7,7 @@ import { CategoryOverviewComponent } from './components/dashboard/overview/overv
 import { ProductListComponent } from './components/products/products-list/products-list';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail';
 import { CartComponent } from './components/cart/cart';
+import { OrdersComponent } from './components/orders/orders';
 import { NotFoundComponent } from './components/not-found/not-found';
 
 export const routes: Routes = [
@@ -18,12 +19,13 @@ export const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: '', component: CategoryOverviewComponent },
-      { path: 'category/:name', component: CategoryComponent }
-    ]
+      { path: 'category/:name', component: CategoryComponent },
+    ],
   },
   { path: 'cart', component: CartComponent },
+  { path: 'orders', component: OrdersComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'products/:id', component: ProductDetailComponent },
   { path: 'not-found', component: NotFoundComponent },
-  { path: '**', redirectTo: 'not-found' }
+  { path: '**', redirectTo: 'not-found' },
 ];

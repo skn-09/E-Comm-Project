@@ -1,0 +1,28 @@
+<div class="orders-page">
+    <h2>Your Orders</h2>
+
+    <div *ngIf="loading">Loading orders...</div>
+    <div *ngIf="!loading && orders.length === 0">You have no orders yet.</div>
+
+    <div *ngIf="!loading && orders.length > 0">
+        <ul class="orders-list">
+            <li *ngFor="let order of orders; let i = index" class="order-item">
+                <div class="order-header">
+                    <strong>Order ID:</strong> {{ order._id }}
+                    <span class="order-date">{{ order.createdAt | date:'medium' }}</span>
+                    <span class="order-total">Total: ₹{{ order.total }}</span>
+                </div>
+                <ul class="order-products">
+                    <li *ngFor="let it of order.items">
+                        {{ it.product.name }} — Qty: {{ it.quantity }} — Price: ₹{{ it.priceAtPurchase }}
+                    </li>
+                </ul>
+                <div class="order-actions">
+                    <span class="order-status" *ngIf="order.status">Status: {{ order.status }}</span>
+                    <button *ngIf="order.status !== 'canceled'" (click)="cancelOrder(order._id, i)"
+                        class="cancel-btn">Cancel Order</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

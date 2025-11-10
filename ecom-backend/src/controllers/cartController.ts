@@ -6,6 +6,7 @@ import {
   fetchCart,
   removeItemFromCart,
 } from "../services/cartService";
+import { createOrderFromCart } from "../services/orderService";
 import { AuthedRequest } from "../types/requests";
 
 export const addToCart = async (req: Request, res: Response) => {
@@ -72,7 +73,16 @@ export const clearCart = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const cart = await clearCartItems(userId);
+    // Create an order from the cart (this will also decrement product stocks and clear the cart)
+    try {
+      await createOrderFromCart(userId);
+    } catch (orderErr) {
+      // Log order creation error but continue to return cleared cart if possible
+      console.error("Order creation failed:", orderErr);
+    }
+
+    // Return the (now empty) cart
+    const cart = await fetchCart(userId);
     res.status(200).json(cart);
   } catch (err) {
     if (err instanceof CartServiceError) {
