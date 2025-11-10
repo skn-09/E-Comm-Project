@@ -9,8 +9,7 @@
     <div class="price">₹{{ product.price }}</div>
     <div *ngIf="product.discount" class="discount">{{ product.discount }}% OFF</div>
     <div *ngIf="product.rating" class="rating">⭐ {{ product.rating }}/5</div>
-    <div *ngIf="product.quantity > 0" class="stock">In stock: {{ product.quantity }}</div>
-    <div *ngIf="product.quantity === 0" class="sold-out">Sold Out</div>
+    <div *ngIf="product.quantity === 0" class="sold-out">Out of stock</div>
     <h3>Description</h3>
     <p>{{ product.description || 'No description provided.' }}</p>
     <h3>Material</h3>

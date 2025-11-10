@@ -1,7 +1,7 @@
 <nav class="navbar">
   <div class="logo">My E-Comm</div>
   <ul class="nav-links">
-    <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
     <li><a routerLink="/signup" routerLinkActive="active">Signup</a></li>
     <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active">Login</a></li>
     <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>

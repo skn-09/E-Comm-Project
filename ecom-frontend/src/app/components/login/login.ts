@@ -43,7 +43,7 @@ export class LoginComponent {
         this.message = res.message;
         this.isError = false;
         this.loginForm.reset();
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.log('Error:', err);

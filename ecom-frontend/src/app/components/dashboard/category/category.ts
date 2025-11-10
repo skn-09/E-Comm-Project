@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../../services/product.service';
 import { CartService } from '../../../services/cart.service';
 import { AuthService } from '../../../services/auth.service';
+import { CATEGORIES } from '../../../constants/categories';
 
 @Component({
   selector: 'app-category',
@@ -13,7 +14,9 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./category.css']
 })
 export class CategoryComponent {
+  categories = CATEGORIES;
   categoryName = '';
+  categoryLabel = '';
   products: Product[] = [];
   loading = true;
   errorMsg = '';
@@ -29,10 +32,29 @@ export class CategoryComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.categoryName = params.get('name') || '';
+      const slug = params.get('name') || '';
+      const category = CATEGORIES.find(cat => cat.slug === slug);
+
+      if (!category) {
+        this.router.navigate(['/not-found']);
+        return;
+      }
+
+      this.categoryName = category.slug;
+      this.categoryLabel = category.label;
+      this.errorMsg = '';
+      this.products = [];
       this.fetchProductsByCategory();
       this.cdr.detectChanges();
     });
+  }
+
+  goToCategory(slug: string) {
+    if (slug === this.categoryName) {
+      return;
+    }
+
+    this.router.navigate([`/home/category/${slug}`]);
   }
 
   fetchProductsByCategory() {

@@ -7,13 +7,14 @@ import { CategoryOverviewComponent } from './components/dashboard/overview/overv
 import { ProductListComponent } from './components/products/products-list/products-list';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail';
 import { CartComponent } from './components/cart/cart';
+import { NotFoundComponent } from './components/not-found/not-found';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   {
-    path: 'dashboard',
+    path: 'home',
     component: DashboardComponent,
     children: [
       { path: '', component: CategoryOverviewComponent },
@@ -23,5 +24,6 @@ export const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'products/:id', component: ProductDetailComponent },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: 'not-found', component: NotFoundComponent },
+  { path: '**', redirectTo: 'not-found' }
 ];

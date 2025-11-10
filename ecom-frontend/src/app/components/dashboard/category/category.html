@@ -1,22 +1,43 @@
-<section class="category-header">
-  <h2>{{ categoryName | titlecase }} Products</h2>
-</section>
-<div *ngIf="loading" class="category-status">Loading products...</div>
-<div *ngIf="errorMsg" class="category-status error">{{ errorMsg }}</div>
-<div *ngIf="!loading && products.length" class="product-grid">
-  <div class="product-card" *ngFor="let p of products">
-    <a [routerLink]="['/products', p._id]">
-      <img class="product-image" [src]="p.imageUrl" [alt]="p.name" />
-    </a>
-    <h3>{{ p.name }}</h3>
-    <p class="price">₹{{ p.price }}</p>
-    <p *ngIf="p.discount" class="discount">{{ p.discount }}% OFF</p>
-    <p *ngIf="p.rating">⭐ {{ p.rating }}/5</p>
-    <p *ngIf="p.quantity > 0" class="stock">In stock: {{ p.quantity }}</p>
-    <p *ngIf="p.quantity === 0" class="sold-out">Sold Out</p>
-    <button type="button" (click)="addToCart(p)" [disabled]="p.quantity === 0">{{ p.quantity === 0 ? 'Sold Out' : 'Add to Cart' }}</button>
-  </div>
-</div>
-<div *ngIf="!loading && !products.length" class="category-status">
-  No products found for {{ categoryName | titlecase }}.
+<div class="category-layout">
+  <aside class="category-sidebar">
+    <h3>Categories</h3>
+    <ul>
+      <li
+        *ngFor="let cat of categories"
+        (click)="goToCategory(cat.slug)"
+        [class.active]="cat.slug === categoryName"
+      >
+        {{ cat.label }}
+      </li>
+    </ul>
+  </aside>
+  <section class="category-content">
+    <section class="category-header">
+      <h2>{{ categoryLabel }} Products</h2>
+    </section>
+    <div *ngIf="loading" class="category-status">Loading products...</div>
+    <div *ngIf="errorMsg" class="category-status error">{{ errorMsg }}</div>
+    <div *ngIf="!loading && products.length" class="product-grid">
+      <div class="product-card" *ngFor="let p of products">
+        <a [routerLink]="['/products', p._id]" class="image-wrapper">
+          <img class="product-image" [src]="p.imageUrl" [alt]="p.name" />
+        </a>
+        <h3>{{ p.name }}</h3>
+        <p class="price">₹{{ p.price }}</p>
+        <p *ngIf="p.discount" class="discount">{{ p.discount }}% OFF</p>
+        <p *ngIf="p.rating">⭐ {{ p.rating }}/5</p>
+        <p *ngIf="p.quantity === 0" class="sold-out">Out of stock</p>
+        <button
+          type="button"
+          (click)="addToCart(p)"
+          [disabled]="p.quantity === 0"
+        >
+          {{ p.quantity === 0 ? 'Out of stock' : 'Add to Cart' }}
+        </button>
+      </div>
+    </div>
+    <div *ngIf="!loading && !products.length" class="category-status">
+      No products found for {{ categoryLabel }}.
+    </div>
+  </section>
 </div>

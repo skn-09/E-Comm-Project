@@ -1,3 +1,47 @@
+.category-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  margin-left: -24px;
+}
+
+.category-sidebar {
+  border-right: 1px solid #e0e0e0;
+  padding-right: 16px;
+}
+
+.category-sidebar h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.category-sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.category-sidebar li {
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.category-sidebar li:hover,
+.category-sidebar li.active {
+  background: #f0f4ff;
+  color: #1a56db;
+}
+
+.category-content {
+  min-width: 0;
+  padding-left: 24px;
+}
+
 .category-header h2 {
   margin: 0 0 16px;
 }
@@ -14,7 +58,7 @@
 .product-grid {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .product-card {
@@ -23,49 +67,94 @@
   padding: 12px;
   background: #fff;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+}
+
+.product-card h3 {
+  margin: 8px 0 0;
+  font-size: 16px;
+}
+
+.image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 160px;
+  padding: 8px;
+  background: #f8f9fb;
+  border-radius: 4px;
 }
 
 .product-image {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .price {
   font-weight: 600;
+  margin: 0;
 }
 
 .discount {
   color: #d26b33;
+  margin: 0;
 }
 
 button {
-  margin-top: 10px;
+  margin-top: auto;
   padding: 6px 12px;
   border: none;
   background: #2d6cdf;
   color: #fff;
   border-radius: 4px;
   cursor: pointer;
+  width: 100%;
 }
 
 button:hover {
   background: #244ea6;
 }
 
-.stock {
-  color: #388e3c;
-  font-size: 0.9rem;
-}
-
 .sold-out {
   color: #d32f2f;
   font-weight: 600;
+  margin: 0;
 }
 
 button[disabled] {
   background: #bdbdbd;
   cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .category-layout {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+
+  .category-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding-right: 0;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+  .category-content {
+    padding-left: 0;
+  }
+
+  .category-sidebar ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .category-sidebar li {
+    padding: 6px 10px;
+  }
 }

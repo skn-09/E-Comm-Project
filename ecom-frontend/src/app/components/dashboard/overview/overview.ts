@@ -17,6 +17,6 @@ export class CategoryOverviewComponent {
   constructor(private router: Router) {}
 
   goToCategory(slug: string) {
-    this.router.navigate([`/dashboard/category/${slug}`]);
+    this.router.navigate([`/home/category/${slug}`]);
   }
 }
